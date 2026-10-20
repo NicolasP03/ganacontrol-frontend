@@ -1,48 +1,81 @@
+import { useEffect, useState } from "react";
 import { Navigate, Outlet, useLocation } from "react-router-dom";
-import { isAuthenticated } from "../../services/AuthService";
-import Sidebar from "./Sidebar";
-import Navbar  from "./Navbar";
-import "./PrivateLayout.css";
-import "../../styles/Home.css";
-import "../../styles/Modulos.css";
 
-// Mapa de rutas → títulos para el Navbar
-const titulos = {
-  "/dashboard":                   "Dashboard",
-  "/ganado":                      "Ganado",
-  "/ganado/registrar":            "Registrar Ganado",
-  "/reproduccion":                "Reproducción",
-  "/eventos":                     "Sanidad & Eventos",
-  "/inventario":                  "Inventario",
-  "/inventario/registrar":        "Registrar Producto",
-  "/inventario/movimientos":      "Movimientos",
-  "/alimentacion":                "Alimentación",
-  "/ventas":                      "Ventas",
-  "/ventas/registrar":            "Registrar Venta",
-  "/reportes/ganado":             "Reporte Ganado",
-  "/reportes/ingresos":           "Reporte Ingresos",
-  "/reportes/stock":              "Reporte Stock",
-  "/configuracion/finca":         "Configuración · Finca",
-  "/configuracion/usuarios":      "Configuración · Usuarios",
-  "/configuracion/roles":         "Configuración · Roles",
+import { isAuthenticated } from "../../services/AuthService";
+
+import Sidebar from "./Sidebar";
+import Navbar from "./Navbar";
+
+import "../../styles/Sidebar.css";
+
+const PAGE_TITLES = {
+  "/dashboard": "Dashboard",
+  "/ganado": "Control Ganadero",
+  "/reproduccion": "Reproducción y Genética",
+  "/eventos": "Salud y Sanidad",
+  "/alimentacion": "Alimentación",
+  "/inventario": "Inventario",
+  "/pasturas": "Potreros",
+  "/ventas": "Ventas",
+  "/finanzas": "Cockpit Financiero",
+  "/configuracion/finca": "Configuración",
+  "/configuracion/usuarios": "Usuarios",
 };
 
 export default function PrivateLayout() {
+  const [collapsed, setCollapsed] = useState(false);
+  const [mobileMenuOpen, setMobileMenuOpen] = useState(false);
+
   const location = useLocation();
 
-  // Redirige al login si no hay sesión
+  useEffect(() => {
+    document.body.classList.toggle("gc-mobile-menu-open", mobileMenuOpen);
+
+    return () => {
+      document.body.classList.remove("gc-mobile-menu-open");
+    };
+  }, [mobileMenuOpen]);
+
   if (!isAuthenticated()) {
-    return <Navigate to="/login" replace state={{ from: location.pathname }} />;
+    return <Navigate to="/login" replace state={{ from: location }} />;
   }
 
-  const titulo = titulos[location.pathname] || "GanaControl";
+  const pageTitle = PAGE_TITLES[location.pathname] || "GanaControl";
+
+  const handleMenuClick = () => {
+    setMobileMenuOpen((open) => !open);
+  };
+
+  const handleMobileClose = () => {
+    setMobileMenuOpen(false);
+  };
+
+  const handleToggleSidebar = () => {
+    if (window.innerWidth <= 768) {
+      setMobileMenuOpen(false);
+      return;
+    }
+
+    setCollapsed((current) => !current);
+  };
 
   return (
-    <div className="gc-layout">
-      <Sidebar />
-      <div className="gc-layout-main">
-        <Navbar titulo={titulo} />
-        <main className="gc-layout-content">
+    <div className="gc-private-layout">
+      <Sidebar
+        collapsed={collapsed}
+        onToggle={handleToggleSidebar}
+        mobileOpen={mobileMenuOpen}
+        onMobileClose={handleMobileClose}
+      />
+
+      <div className={`gc-main-content ${collapsed ? "sidebar-collapsed" : ""}`}>
+        <Navbar
+          collapsed={collapsed}
+          pageTitle={pageTitle}
+          onMenuClick={handleMenuClick}
+        />
+
+        <main className="gc-page-body">
           <Outlet />
         </main>
       </div>

@@ -1,0 +1,326 @@
+/* ═══════════════════════════════════════════════════════════════════
+   GANACONTROL — Design Tokens (Versión BOOM ÉLITE)
+   Paleta unificada: verdes profundos + dorados premium
+   Sistema de diseño elegante + explosivo
+   ═══════════════════════════════════════════════════════════════════ */
+
+:root {
+  /* ══════════════════════════════════════════════════════════════════
+     PALETA PRINCIPAL - VERDES PROFUNDOS
+     ══════════════════════════════════════════════════════════════════ */
+  
+  /* Verde base - inspirado en el campo colombiano */
+  --green-950: #051a0e;
+  --green-900: #0a2b1a;
+  --green-850: #0e381f;
+  --green-800: #123d26;
+  --green-750: #174a2e;
+  --green-700: #1b5438;
+  --green-650: #1f6040;
+  --green-600: #256f48;
+  --green-550: #2c7e50;
+  --green-500: #368a5c;
+  --green-450: #429a6a;
+  --green-400: #50a475;
+  --green-350: #60b085;
+  --green-300: #7ebf96;
+  --green-250: #9bccae;
+  --green-200: #b6dbc6;
+  --green-150: #cde8da;
+  --green-100: #d4ecd9;
+  --green-50:  #eaf6e6;
+  
+  /* ══════════════════════════════════════════════════════════════════
+     ACENTOS DORADOS PREMIUM - Inspirados en la tradición ganadera
+     ══════════════════════════════════════════════════════════════════ */
+  --gold-900:  #7a5c1a;
+  --gold-800:  #8f6e1f;
+  --gold-700:  #a38025;
+  --gold-600:  #b8932b;
+  --gold-500:  #c9a532;
+  --gold-400:  #d4a53c;
+  --gold-300:  #dfb355;
+  --gold-200:  #e8c97a;
+  --gold-100:  #f1dc9f;
+  --gold-50:   #f9efcf;
+  
+  /* Alias para uso directo */
+  --dorado:       #d4a53c;
+  --dorado-claro: #e8c97a;
+  --dorado-oscuro:#b8860b;
+  --dorado-suave: #f1dc9f;
+  
+  /* ══════════════════════════════════════════════════════════════════
+     NEUTROS ELEGANTES
+     ══════════════════════════════════════════════════════════════════ */
+  --charcoal-900: #0f1a10;
+  --charcoal-800: #1a2a1f;
+  --charcoal-700: #243a28;
+  --charcoal-600: #2e4a32;
+  --charcoal-500: #385a3c;
+  --charcoal-400: #426a46;
+  --charcoal-300: #5c8060;
+  --charcoal-200: #8f9e92;
+  --charcoal-100: #c2cec4;
+  --charcoal-50:  #e5eae6;
+  
+  --stone-900:  #2a2a1a;
+  --stone-800:  #3b2e1e;
+  --stone-700:  #4a5b4e;
+  --stone-600:  #5c6e60;
+  --stone-500:  #6e8172;
+  --stone-400:  #809584;
+  --stone-300:  #93a896;
+  --stone-200:  #a6bba8;
+  --stone-100:  #b9ceba;
+  --stone-50:   #cce1cd;
+  
+  /* Alias */
+  --gris-carbón: #1a2a1f;
+  --gris-piedra: #4a5b4e;
+  --gris-bruma:  #8f9e92;
+  --blanco:      #ffffff;
+  --negro:       #0a0a0a;
+  
+  /* ══════════════════════════════════════════════════════════════════
+     SUPERFICIES Y BORDES
+     ══════════════════════════════════════════════════════════════════ */
+  --surface-white:  #ffffff;
+  --surface-light:  #f8fafc;
+  --surface-subtle: #f1f5f9;
+  --surface-green:  #eaf6e6;
+  --border-light:   rgba(212, 165, 60, 0.15);
+  --border-green:   rgba(80, 164, 117, 0.2);
+  --border-gold:    rgba(212, 165, 60, 0.3);
+  
+  /* ══════════════════════════════════════════════════════════════════
+     TEXTOS PREMIUM
+     ══════════════════════════════════════════════════════════════════ */
+  --text-primary:   #1a2a1f;
+  --text-secondary: #4a5b4e;
+  --text-muted:     #6e8172;
+  --text-faint:     #8f9e92;
+  --text-inverse:   #ffffff;
+  --text-gold:      #d4a53c;
+  
+  /* ══════════════════════════════════════════════════════════════════
+     GLASSMORPHISM - Efecto vidrio premium
+     ══════════════════════════════════════════════════════════════════ */
+  --glass-bg:       rgba(255, 255, 255, 0.75);
+  --glass-bg-dark:  rgba(10, 43, 26, 0.65);
+  --glass-border:   rgba(212, 165, 60, 0.15);
+  --glass-border-lg: rgba(212, 165, 60, 0.25);
+  --glass-blur:     blur(16px);
+  --glass-blur-lg:  blur(24px);
+  
+  /* ══════════════════════════════════════════════════════════════════
+     SOMBRAS PREMIUM
+     ══════════════════════════════════════════════════════════════════ */
+  --shadow-xs:   0 1px 2px rgba(10, 43, 26, 0.04);
+  --shadow-sm:   0 2px 8px rgba(10, 43, 26, 0.06);
+  --shadow-md:   0 8px 24px rgba(10, 43, 26, 0.1);
+  --shadow-lg:   0 16px 40px rgba(10, 43, 26, 0.12);
+  --shadow-xl:   0 24px 64px rgba(10, 43, 26, 0.16);
+  --shadow-2xl:  0 32px 80px rgba(10, 43, 26, 0.2);
+  
+  /* Sombras con color */
+  --shadow-green-sm: 0 4px 16px rgba(37, 111, 72, 0.15);
+  --shadow-green-md: 0 8px 32px rgba(37, 111, 72, 0.2);
+  --shadow-green-lg: 0 12px 48px rgba(37, 111, 72, 0.25);
+  --shadow-gold-sm:  0 4px 16px rgba(212, 165, 60, 0.15);
+  --shadow-gold-md:  0 8px 32px rgba(212, 165, 60, 0.2);
+  --shadow-gold-lg:  0 12px 48px rgba(212, 165, 60, 0.25);
+  
+  /* ══════════════════════════════════════════════════════════════════
+     ESTADOS Y FEEDBACK
+     ══════════════════════════════════════════════════════════════════ */
+  --color-success:     #256f48;
+  --color-success-bg:  #eaf6e6;
+  --color-success-bdr: rgba(37, 111, 72, 0.3);
+  
+  --color-warning:     #d4a53c;
+  --color-warning-bg:  #f9efcf;
+  --color-warning-bdr: rgba(212, 165, 60, 0.3);
+  
+  --color-danger:      #dc2626;
+  --color-danger-bg:   #fee2e2;
+  --color-danger-bdr:  rgba(220, 38, 38, 0.25);
+  
+  --color-info:        #3b82f6;
+  --color-info-bg:     #dbeafe;
+  --color-info-bdr:    rgba(59, 130, 246, 0.25);
+  
+  /* ══════════════════════════════════════════════════════════════════
+     SIDEBAR PREMIUM
+     ══════════════════════════════════════════════════════════════════ */
+  --sidebar-bg:        linear-gradient(135deg, #123d26 0%, #0a2b1a 100%);
+  --sidebar-width:     280px;
+  --sidebar-collapsed: 80px;
+  --sidebar-text:      rgba(255, 255, 255, 0.8);
+  --sidebar-text-hover: #ffffff;
+  --sidebar-active:    rgba(212, 165, 60, 0.25);
+  --sidebar-hover:     rgba(212, 165, 60, 0.12);
+  --sidebar-accent:    #d4a53c;
+  
+  /* ══════════════════════════════════════════════════════════════════
+     NAVBAR PREMIUM
+     ══════════════════════════════════════════════════════════════════ */
+  --navbar-height: 70px;
+  --navbar-bg:     rgba(255, 255, 255, 0.96);
+  --navbar-blur:   blur(16px);
+  
+  /* ══════════════════════════════════════════════════════════════════
+     FUENTES PREMIUM
+     ══════════════════════════════════════════════════════════════════ */
+  --font-sans:    "Inter", system-ui, -apple-system, sans-serif;
+  --font-serif:   "Playfair Display", Georgia, serif;
+  --font-display: "Playfair Display", "Inter", sans-serif;
+  --font-mono:    "JetBrains Mono", "Fira Code", monospace;
+  
+  /* ══════════════════════════════════════════════════════════════════
+     ESPACIADO - Sistema 4px
+     ══════════════════════════════════════════════════════════════════ */
+  --space-0:  0;
+  --space-1:  0.25rem;  /* 4px */
+  --space-2:  0.5rem;   /* 8px */
+  --space-3:  0.75rem;  /* 12px */
+  --space-4:  1rem;     /* 16px */
+  --space-5:  1.25rem;  /* 20px */
+  --space-6:  1.5rem;   /* 24px */
+  --space-8:  2rem;     /* 32px */
+  --space-10: 2.5rem;   /* 40px */
+  --space-12: 3rem;     /* 48px */
+  --space-14: 3.5rem;   /* 56px */
+  --space-16: 4rem;     /* 64px */
+  --space-20: 5rem;     /* 80px */
+  --space-24: 6rem;     /* 96px */
+  
+  /* ══════════════════════════════════════════════════════════════════
+     RADIOS - Bordes redondeados
+     ══════════════════════════════════════════════════════════════════ */
+  --radius-xs:  0.25rem;   /* 4px */
+  --radius-sm:  0.5rem;    /* 8px */
+  --radius-md:  0.75rem;   /* 12px */
+  --radius-lg:  1rem;      /* 16px */
+  --radius-xl:  1.25rem;   /* 20px */
+  --radius-2xl: 1.5rem;    /* 24px */
+  --radius-3xl: 2rem;      /* 32px */
+  --radius-full: 9999px;
+  
+  /* ══════════════════════════════════════════════════════════════════
+     TRANSICIONES
+     ══════════════════════════════════════════════════════════════════ */
+  --transition-fast:   0.15s cubic-bezier(0.4, 0, 0.2, 1);
+  --transition-normal: 0.25s cubic-bezier(0.4, 0, 0.2, 1);
+  --transition-slow:   0.35s cubic-bezier(0.4, 0, 0.2, 1);
+  --transition-boom:   0.3s cubic-bezier(0.2, 0.9, 0.4, 1.2);
+  --transition-bounce: 0.5s cubic-bezier(0.68, -0.55, 0.265, 1.55);
+  
+  /* ══════════════════════════════════════════════════════════════════
+     Z-INDEX
+     ══════════════════════════════════════════════════════════════════ */
+  --z-dropdown:   50;
+  --z-sticky:     80;
+  --z-navbar:     90;
+  --z-sidebar:    100;
+  --z-modal:      200;
+  --z-tooltip:    300;
+  --z-toast:      400;
+  
+  /* ══════════════════════════════════════════════════════════════════
+     ANIMACIONES PERSONALIZADAS
+     ══════════════════════════════════════════════════════════════════ */
+  --ease-spring: cubic-bezier(0.34, 1.2, 0.64, 1);
+  --ease-smooth: cubic-bezier(0.2, 0.9, 0.4, 1.1);
+  
+  /* ══════════════════════════════════════════════════════════════════
+     BREAKPOINTS
+     ══════════════════════════════════════════════════════════════════ */
+  --breakpoint-sm: 640px;
+  --breakpoint-md: 768px;
+  --breakpoint-lg: 1024px;
+  --breakpoint-xl: 1280px;
+  --breakpoint-2xl: 1536px;
+}
+
+/* ═══════════════════════════════════════════════════════════════════
+   TOKENS ADICIONALES PARA RESPONSIVE
+   ═══════════════════════════════════════════════════════════════════ */
+@media (max-width: 768px) {
+  :root {
+    --sidebar-width: 260px;
+    --sidebar-collapsed: 0px;
+    --navbar-height: 60px;
+    --space-8: 1.5rem;
+    --space-10: 2rem;
+    --space-12: 2.5rem;
+  }
+}
+
+@media (max-width: 640px) {
+  :root {
+    --radius-lg: 0.875rem;
+    --radius-xl: 1rem;
+    --radius-2xl: 1.25rem;
+  }
+}
+
+/* ═══════════════════════════════════════════════════════════════════
+   VARIABLES CSS PARA MODO OSCURO (preparado para futuro)
+   ═══════════════════════════════════════════════════════════════════ */
+@media (prefers-color-scheme: dark) {
+  /* Esto es opcional, se puede activar más adelante */
+  /* :root.dark-mode { ... } */
+}
+
+/* ═══════════════════════════════════════════════════════════════════
+   UTILIDADES GLOBALES
+   ═══════════════════════════════════════════════════════════════════ */
+* {
+  box-sizing: border-box;
+}
+
+html {
+  scroll-behavior: smooth;
+}
+
+body {
+  font-family: var(--font-sans);
+  color: var(--text-primary);
+  background: var(--surface-light);
+  -webkit-font-smoothing: antialiased;
+  -moz-osx-font-smoothing: grayscale;
+}
+
+/* Selección de texto premium */
+::selection {
+  background: var(--dorado);
+  color: var(--blanco);
+}
+
+/* Focus ring unificado */
+:focus-visible {
+  outline: 2px solid var(--dorado);
+  outline-offset: 2px;
+  border-radius: var(--radius-sm);
+}
+
+/* Scrollbar uniforme para toda la app */
+::-webkit-scrollbar {
+  width: 6px;
+  height: 6px;
+}
+
+::-webkit-scrollbar-track {
+  background: var(--green-100);
+  border-radius: var(--radius-full);
+}
+
+::-webkit-scrollbar-thumb {
+  background: linear-gradient(135deg, var(--green-500), var(--dorado));
+  border-radius: var(--radius-full);
+}
+
+::-webkit-scrollbar-thumb:hover {
+  background: linear-gradient(135deg, var(--green-600), var(--dorado-claro));
+}

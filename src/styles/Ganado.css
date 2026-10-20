@@ -1,0 +1,530 @@
+/* ═══════════════════════════════════════════════════════════════════
+   GANACONTROL — Módulo Ganado (Versión BOOM ÉLITE)
+   Paleta unificada: verdes profundos + dorados premium
+   Diseño elegante + explosivo | Full responsive
+   ═══════════════════════════════════════════════════════════════════ */
+
+@import url('https://fonts.googleapis.com/css2?family=Playfair+Display:ital,wght@0,400;0,500;0,600;0,700;0,800;0,900;1,600&display=swap');
+@import url('https://fonts.googleapis.com/css2?family=Inter:opsz,wght@14..32,300;14..32,400;14..32,500;14..32,600;14..32,700;14..32,800&display=swap');
+
+/* ──────────────────────────────────────────────────────────────────
+   VARIABLES - PALETA UNIFICADA (verde + dorado)
+   ────────────────────────────────────────────────────────────────── */
+:root {
+  --gana-verde-profundo: #0a2b1a;
+  --gana-verde-bosque: #123d26;
+  --gana-verde-pasto: #1b5438;
+  --gana-verde-cosecha: #256f48;
+  --gana-verde-prado: #368a5c;
+  --gana-verde-salvia: #50a475;
+  --gana-verde-musgo: #7ebf96;
+  --gana-verde-claro: #d4ecd9;
+  --gana-verde-corteza: #eaf6e6;
+  
+  /* Acentos dorados premium */
+  --gana-dorado: #d4a53c;
+  --gana-dorado-claro: #e8c97a;
+  --gana-dorado-oscuro: #b8860b;
+  
+  /* Neutros elegantes */
+  --gana-gris-carbón: #1a2a1f;
+  --gana-gris-piedra: #4a5b4e;
+  --gana-gris-bruma: #8f9e92;
+  --gana-blanco: #ffffff;
+  
+  /* Superficies y bordes */
+  --gana-surface-white: var(--gana-blanco);
+  --gana-surface-light: var(--gana-verde-corteza);
+  --gana-surface-subtle: var(--gana-verde-claro);
+  --gana-border-light: rgba(212, 165, 60, 0.15);
+  --gana-border-soft: rgba(212, 165, 60, 0.08);
+  
+  /* Textos */
+  --gana-text-primary: var(--gana-gris-carbón);
+  --gana-text-muted: var(--gana-gris-piedra);
+  --gana-text-faint: var(--gana-gris-bruma);
+  
+  /* Sombras premium */
+  --gana-shadow-xs: 0 1px 2px rgba(10, 43, 26, 0.04);
+  --gana-shadow-sm: 0 2px 8px rgba(10, 43, 26, 0.06);
+  --gana-shadow-md: 0 8px 24px rgba(10, 43, 26, 0.1);
+  --gana-shadow-lg: 0 16px 40px rgba(10, 43, 26, 0.15);
+  --gana-shadow-green-sm: 0 6px 20px rgba(37, 111, 72, 0.2);
+  --gana-shadow-gold: 0 0 20px rgba(212, 165, 60, 0.25);
+  
+  /* Radios */
+  --gana-radius-sm: 0.75rem;
+  --gana-radius-md: 1rem;
+  --gana-radius-lg: 1.25rem;
+  --gana-radius-xl: 1.5rem;
+  --gana-radius-full: 9999px;
+  
+  /* Espaciado */
+  --gana-space-6: 1.5rem;
+  --gana-space-8: 2rem;
+  
+  /* Fuentes */
+  --gana-font-serif: 'Playfair Display', Georgia, serif;
+  --gana-font-sans: 'Inter', system-ui, sans-serif;
+  
+  /* Transiciones */
+  --gana-transition: all 0.2s cubic-bezier(0.4, 0, 0.2, 1);
+  --gana-transition-normal: all 0.3s cubic-bezier(0.2, 0.9, 0.4, 1.1);
+  --gana-transition-slow: all 0.4s cubic-bezier(0.2, 0.9, 0.4, 1.2);
+}
+
+/* ──────────────────────────────────────────────────────────────────
+   ANIMACIONES BOOM
+   ────────────────────────────────────────────────────────────────── */
+@keyframes ganaFadeUp {
+  from { opacity: 0; transform: translateY(20px); filter: blur(2px); }
+  to { opacity: 1; transform: translateY(0); filter: blur(0); }
+}
+
+@keyframes ganaPulseGold {
+  0%, 100% { box-shadow: 0 0 5px rgba(212, 165, 60, 0.3); }
+  50% { box-shadow: 0 0 20px rgba(212, 165, 60, 0.6); }
+}
+
+@keyframes ganaFloat {
+  0%, 100% { transform: translateY(0px); }
+  50% { transform: translateY(-3px); }
+}
+
+@keyframes ganaShimmer {
+  0% { background-position: -200% 0; }
+  100% { background-position: 200% 0; }
+}
+
+/* ═══════════════════════════════════════════════════════════════════
+   HERO PREMIUM
+   ═══════════════════════════════════════════════════════════════════ */
+.ganado-hero {
+  position: relative;
+  height: 380px;
+  border-radius: var(--gana-radius-xl);
+  overflow: hidden;
+  margin-bottom: var(--gana-space-8);
+  background: linear-gradient(135deg, rgba(255,255,255,0.96), rgba(255,255,255,0.8)),
+    url("https://lh3.googleusercontent.com/aida-public/AB6AXuDW97n3Zr_K99UognZJP2pDE_GRKLahAOazNW1ZyWrCqIIEidUaxT9nC5LCNaWy1aqjtC5i17B9B1rYMAtZjJDLyh18tEQcvSxK8-O8RiCFGbInTpBn7VBffJThnD11CuPG_JxA0rSw3gZpAfjQpsRhiICqALIcVsx5oWeGBTvGXBBoMCs_5hVqb07ru-itx2imn3AuzCrRtkJzH2N5umRt7NuvC9CxoTV-0S5ssKBBl-Qcs-242HOFTCpISHpEwNLVhSWgPSLR-3k") center/cover;
+  border: 1px solid var(--gana-border-light);
+  box-shadow: var(--gana-shadow-md);
+  transition: var(--gana-transition-normal);
+}
+
+.ganado-hero:hover {
+  box-shadow: var(--gana-shadow-lg), var(--gana-shadow-gold);
+}
+
+.ganado-hero::before {
+  content: '';
+  position: absolute;
+  left: 0;
+  top: 10%;
+  bottom: 10%;
+  width: 4px;
+  background: linear-gradient(to bottom, var(--gana-dorado), var(--gana-verde-prado), var(--gana-dorado));
+  border-radius: 0 4px 4px 0;
+  z-index: 1;
+}
+
+.ganado-hero::after {
+  content: '';
+  position: absolute;
+  top: -50px;
+  right: -50px;
+  width: 200px;
+  height: 200px;
+  background: radial-gradient(circle, rgba(212, 165, 60, 0.08), transparent);
+  border-radius: 50%;
+  pointer-events: none;
+}
+
+.ganado-hero__inner {
+  position: absolute;
+  inset: 0;
+  display: flex;
+  flex-direction: column;
+  justify-content: center;
+  padding: 3rem;
+  z-index: 2;
+}
+
+.ganado-hero__eyebrow {
+  display: flex;
+  align-items: center;
+  gap: 0.5rem;
+  font-size: 0.7rem;
+  font-weight: 800;
+  text-transform: uppercase;
+  letter-spacing: 0.2em;
+  color: var(--gana-dorado-oscuro);
+  margin-bottom: 0.875rem;
+  background: rgba(212, 165, 60, 0.1);
+  padding: 0.25rem 0.75rem;
+  border-radius: var(--gana-radius-full);
+  width: fit-content;
+  border: 1px solid rgba(212, 165, 60, 0.2);
+}
+
+.ganado-hero__eyebrow-dot {
+  width: 6px;
+  height: 6px;
+  border-radius: 50%;
+  background: var(--gana-dorado);
+  animation: ganaPulseGold 1.5s infinite;
+}
+
+.ganado-hero__h1 {
+  font-family: var(--gana-font-serif);
+  font-size: clamp(2rem, 4vw, 3.2rem);
+  font-weight: 900;
+  background: linear-gradient(135deg, var(--gana-text-primary), var(--gana-verde-cosecha), var(--gana-dorado-oscuro));
+  background-clip: text;
+  -webkit-background-clip: text;
+  -webkit-text-fill-color: transparent;
+  line-height: 1.1;
+  margin-bottom: 1rem;
+}
+
+.ganado-hero__h1 span {
+  background: linear-gradient(135deg, var(--gana-dorado), var(--gana-dorado-claro));
+  background-clip: text;
+  -webkit-background-clip: text;
+  -webkit-text-fill-color: transparent;
+}
+
+.ganado-hero__p {
+  font-size: 1rem;
+  color: var(--gana-text-muted);
+  max-width: 420px;
+  margin-bottom: 1.75rem;
+  line-height: 1.7;
+}
+
+.ganado-hero__btns {
+  display: flex;
+  gap: 1rem;
+}
+
+/* ═══════════════════════════════════════════════════════════════════
+   CARDS DE ANIMALES PREMIUM
+   ═══════════════════════════════════════════════════════════════════ */
+.ganado-cards {
+  display: grid;
+  grid-template-columns: repeat(3, 1fr);
+  gap: var(--gana-space-6);
+  margin-bottom: var(--gana-space-8);
+}
+
+.ganado-card {
+  background: var(--gana-surface-white);
+  border: 1px solid var(--gana-border-light);
+  border-radius: var(--gana-radius-xl);
+  overflow: hidden;
+  transition: var(--gana-transition-normal);
+  cursor: pointer;
+  position: relative;
+}
+
+.ganado-card::before {
+  content: '';
+  position: absolute;
+  top: 0;
+  left: 0;
+  right: 0;
+  height: 3px;
+  background: linear-gradient(90deg, var(--gana-dorado), var(--gana-verde-prado), var(--gana-dorado));
+  transform: scaleX(0);
+  transform-origin: left;
+  transition: transform 0.4s ease;
+}
+
+.ganado-card:hover {
+  border-color: var(--gana-dorado);
+  box-shadow: var(--gana-shadow-green-sm), var(--gana-shadow-gold);
+  transform: translateY(-5px);
+}
+
+.ganado-card:hover::before {
+  transform: scaleX(1);
+}
+
+.ganado-card__img-wrap {
+  height: 240px;
+  overflow: hidden;
+  position: relative;
+  background: linear-gradient(135deg, var(--gana-verde-corteza) 0%, var(--gana-verde-claro) 100%);
+  display: flex;
+  align-items: center;
+  justify-content: center;
+}
+
+.ganado-card__img {
+  width: 100%;
+  height: 100%;
+  object-fit: contain;
+  object-position: center;
+  padding: 6px;
+  transition: var(--gana-transition-slow);
+}
+
+.ganado-card:hover .ganado-card__img {
+  transform: scale(1.05);
+}
+
+.ganado-card__id {
+  position: absolute;
+  top: 1rem;
+  left: 1rem;
+  font-family: monospace;
+  font-size: 0.65rem;
+  background: rgba(255, 255, 255, 0.95);
+  color: var(--gana-dorado);
+  padding: 0.2rem 0.6rem;
+  border-radius: var(--gana-radius-sm);
+  border: 1px solid rgba(212, 165, 60, 0.3);
+  font-weight: 700;
+  backdrop-filter: blur(4px);
+}
+
+.ganado-card__estado {
+  position: absolute;
+  top: 1rem;
+  right: 1rem;
+  font-size: 0.62rem;
+  font-weight: 800;
+  text-transform: uppercase;
+  letter-spacing: 0.08em;
+  padding: 0.25rem 0.75rem;
+  border-radius: var(--gana-radius-full);
+  color: #fff;
+  backdrop-filter: blur(4px);
+  background: linear-gradient(135deg, var(--gana-verde-cosecha), var(--gana-verde-prado));
+  box-shadow: var(--gana-shadow-green-sm);
+}
+
+.ganado-card__body {
+  padding: 1.25rem 1.5rem;
+}
+
+.ganado-card__nombre {
+  font-size: 1.2rem;
+  font-weight: 900;
+  background: linear-gradient(135deg, var(--gana-text-primary), var(--gana-verde-cosecha));
+  background-clip: text;
+  -webkit-background-clip: text;
+  -webkit-text-fill-color: transparent;
+}
+
+.ganado-card__raza {
+  font-size: 0.7rem;
+  font-weight: 700;
+  color: var(--gana-dorado-oscuro);
+  text-transform: uppercase;
+  letter-spacing: 0.1em;
+  margin: 4px 0 1rem;
+}
+
+.ganado-card__peso {
+  font-size: 1.5rem;
+  font-weight: 900;
+  background: linear-gradient(135deg, var(--gana-verde-cosecha), var(--gana-dorado));
+  background-clip: text;
+  -webkit-background-clip: text;
+  -webkit-text-fill-color: transparent;
+}
+
+.ganado-card__peso-lbl {
+  font-size: 0.65rem;
+  color: var(--gana-text-faint);
+  text-transform: uppercase;
+}
+
+.ganado-card__metrics {
+  display: grid;
+  grid-template-columns: 1fr 1fr;
+  gap: 0.75rem;
+  margin-top: 1rem;
+}
+
+.ganado-card__metric {
+  background: var(--gana-verde-corteza);
+  border: 1px solid var(--gana-border-soft);
+  border-radius: var(--gana-radius-md);
+  padding: 0.65rem;
+  display: flex;
+  align-items: center;
+  gap: 0.5rem;
+  transition: var(--gana-transition);
+}
+
+.ganado-card:hover .ganado-card__metric {
+  border-color: var(--gana-dorado);
+}
+
+.ganado-card__metric-lbl {
+  font-size: 0.6rem;
+  color: var(--gana-text-faint);
+  text-transform: uppercase;
+  font-weight: 700;
+}
+
+.ganado-card__metric-val {
+  font-size: 0.82rem;
+  font-weight: 700;
+  color: var(--gana-text-primary);
+}
+
+/* ═══════════════════════════════════════════════════════════════════
+   TABLA PREMIUM
+   ═══════════════════════════════════════════════════════════════════ */
+.ganado-table-section {
+  background: var(--gana-surface-white);
+  border: 1px solid var(--gana-border-light);
+  border-radius: var(--gana-radius-xl);
+  overflow: hidden;
+  box-shadow: var(--gana-shadow-xs);
+  transition: var(--gana-transition-normal);
+}
+
+.ganado-table-section:hover {
+  border-color: var(--gana-dorado);
+  box-shadow: var(--gana-shadow-md), var(--gana-shadow-gold);
+}
+
+.ganado-table-header {
+  padding: 1.25rem 1.5rem;
+  border-bottom: 1px solid var(--gana-border-light);
+  display: flex;
+  justify-content: space-between;
+  align-items: center;
+  flex-wrap: wrap;
+  gap: 1rem;
+}
+
+.ganado-table-header__title {
+  font-family: var(--gana-font-serif);
+  font-size: 1rem;
+  font-weight: 800;
+  background: linear-gradient(135deg, var(--gana-text-primary), var(--gana-verde-cosecha));
+  background-clip: text;
+  -webkit-background-clip: text;
+  -webkit-text-fill-color: transparent;
+}
+
+/* Búsqueda premium */
+.ganado-table-search {
+  display: flex;
+  align-items: center;
+  gap: 0.5rem;
+  background: var(--gana-verde-corteza);
+  border: 1.5px solid var(--gana-border-light);
+  border-radius: var(--gana-radius-full);
+  padding: 0.45rem 1rem;
+  min-width: 220px;
+  transition: var(--gana-transition);
+}
+
+.ganado-table-search:focus-within {
+  border-color: var(--gana-dorado);
+  background: var(--gana-blanco);
+  box-shadow: 0 0 0 3px rgba(212, 165, 60, 0.12);
+}
+
+.ganado-table-search input {
+  border: none;
+  background: transparent;
+  font-size: 0.85rem;
+  padding: 0;
+  outline: none;
+  box-shadow: none;
+  width: 100%;
+  color: var(--gana-text-primary);
+}
+
+.ganado-table-search input::placeholder {
+  color: var(--gana-text-faint);
+}
+
+.ganado-table-search i {
+  color: var(--gana-dorado);
+  font-size: 0.85rem;
+}
+
+/* Responsive */
+@media (max-width: 1200px) {
+  .ganado-cards {
+    grid-template-columns: repeat(2, 1fr);
+  }
+}
+
+@media (max-width: 900px) {
+  .ganado-hero {
+    height: auto;
+    min-height: 320px;
+  }
+  .ganado-hero__inner {
+    position: relative;
+    padding: 2rem;
+  }
+}
+
+@media (max-width: 768px) {
+  .ganado-cards {
+    grid-template-columns: 1fr;
+  }
+  .ganado-table-header {
+    flex-direction: column;
+    align-items: stretch;
+  }
+  .ganado-table-search {
+    width: 100%;
+  }
+  .ganado-hero__h1 {
+    font-size: 1.8rem;
+  }
+}
+
+@media (max-width: 640px) {
+  .ganado-hero__inner {
+    padding: 1.5rem;
+  }
+  .ganado-hero__p {
+    font-size: 0.9rem;
+  }
+  .ganado-hero__btns {
+    flex-direction: column;
+  }
+  .ganado-hero__btns .gc-btn {
+    width: 100%;
+    justify-content: center;
+  }
+}
+
+/* Focus visible */
+*:focus-visible {
+  outline: 2px solid var(--gana-dorado);
+  outline-offset: 2px;
+  border-radius: var(--gana-radius-sm);
+}
+
+/* Scrollbar premium */
+::-webkit-scrollbar {
+  width: 6px;
+  height: 6px;
+}
+
+::-webkit-scrollbar-track {
+  background: var(--gana-verde-claro);
+  border-radius: var(--gana-radius-full);
+}
+
+::-webkit-scrollbar-thumb {
+  background: linear-gradient(135deg, var(--gana-verde-prado), var(--gana-dorado));
+  border-radius: var(--gana-radius-full);
+}
+
+::-webkit-scrollbar-thumb:hover {
+  background: linear-gradient(135deg, var(--gana-verde-cosecha), var(--gana-dorado-claro));
+}

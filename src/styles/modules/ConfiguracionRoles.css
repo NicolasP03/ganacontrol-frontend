@@ -1,0 +1,517 @@
+/* ═══════════════════════════════════════════════════════════════════
+   Configuración - Roles (Versión BOOM ÉLITE)
+   Paleta unificada: verdes profundos + dorados premium
+   ═══════════════════════════════════════════════════════════════════ */
+
+/* ── Toolbar ─────────────────────────────────────────────────────── */
+.cfg-toolbar {
+  display: flex;
+  justify-content: space-between;
+  align-items: center;
+  flex-wrap: wrap;
+  gap: 1rem;
+  margin-bottom: 1.5rem;
+}
+
+.cfg-toolbar__help {
+  display: flex;
+  align-items: center;
+  gap: 0.5rem;
+  padding: 0.5rem 1rem;
+  background: linear-gradient(135deg, rgba(212, 165, 60, 0.08), rgba(37, 111, 72, 0.08));
+  border: 1px solid rgba(212, 165, 60, 0.15);
+  border-radius: 0.75rem;
+  max-width: 420px;
+}
+
+.cfg-help-icon {
+  font-size: 1.2rem;
+  flex-shrink: 0;
+}
+
+.cfg-help-text {
+  font-size: 0.78rem;
+  color: var(--text-muted, #4a5b4e);
+  line-height: 1.4;
+}
+
+/* ── Grid de roles ────────────────────────────────────────────────── */
+.cfg-roles-grid {
+  display: grid;
+  grid-template-columns: repeat(3, 1fr);
+  gap: 1.5rem;
+}
+
+@media (max-width: 1024px) {
+  .cfg-roles-grid {
+    grid-template-columns: repeat(2, 1fr);
+  }
+}
+
+@media (max-width: 640px) {
+  .cfg-roles-grid {
+    grid-template-columns: 1fr;
+  }
+}
+
+/* ── Tarjeta de rol premium ─────────────────────────────────────── */
+.cfg-rol-card {
+  background: var(--surface-white, #ffffff);
+  border: 1px solid rgba(212, 165, 60, 0.12);
+  border-radius: 1.25rem;
+  padding: 1.5rem;
+  box-shadow: 0 2px 8px rgba(10, 43, 26, 0.04);
+  transition: all 0.3s cubic-bezier(0.2, 0.9, 0.4, 1.1);
+  position: relative;
+  overflow: hidden;
+}
+
+.cfg-rol-card::before {
+  content: '';
+  position: absolute;
+  top: 0;
+  left: 0;
+  right: 0;
+  height: 3px;
+  background: linear-gradient(90deg, var(--dorado, #d4a53c), var(--verde-prado, #368a5c), var(--dorado, #d4a53c));
+  transform: scaleX(0);
+  transform-origin: left;
+  transition: transform 0.4s ease;
+}
+
+.cfg-rol-card:hover {
+  transform: translateY(-4px);
+  border-color: var(--dorado, #d4a53c);
+  box-shadow: 0 8px 24px rgba(10, 43, 26, 0.08), 0 0 20px rgba(212, 165, 60, 0.15);
+}
+
+.cfg-rol-card:hover::before {
+  transform: scaleX(1);
+}
+
+.cfg-rol-card__head {
+  display: flex;
+  align-items: flex-start;
+  gap: 0.75rem;
+  margin-bottom: 1rem;
+}
+
+.cfg-rol-icon {
+  width: 44px;
+  height: 44px;
+  border-radius: 0.75rem;
+  background: linear-gradient(135deg, var(--verde-cosecha, #256f48), var(--dorado, #d4a53c));
+  color: #fff;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  font-weight: 900;
+  font-size: 1.2rem;
+  flex-shrink: 0;
+  box-shadow: 0 4px 12px rgba(37, 111, 72, 0.2);
+  transition: all 0.3s ease;
+}
+
+.cfg-rol-card:hover .cfg-rol-icon {
+  transform: scale(1.05);
+  box-shadow: 0 4px 20px rgba(212, 165, 60, 0.3);
+}
+
+.cfg-rol-info {
+  flex: 1;
+  min-width: 0;
+}
+
+.cfg-rol-nombre {
+  font-weight: 800;
+  margin: 0 0 0.2rem;
+  font-size: 1rem;
+  color: var(--text-primary, #1a2a1f);
+}
+
+.cfg-rol-desc {
+  margin: 0;
+  font-size: 0.82rem;
+  color: var(--text-muted, #4a5b4e);
+  line-height: 1.4;
+}
+
+/* ── Resumen de permisos ─────────────────────────────────────────── */
+.cfg-rol-permisos-resumen {
+  display: flex;
+  align-items: center;
+  gap: 0.75rem;
+  padding: 0.75rem 0;
+  border-top: 1px solid rgba(212, 165, 60, 0.08);
+  border-bottom: 1px solid rgba(212, 165, 60, 0.08);
+  margin-bottom: 1rem;
+}
+
+.cfg-rol-permisos-count {
+  font-size: 0.75rem;
+  font-weight: 800;
+  color: var(--verde-cosecha, #256f48);
+  background: var(--verde-claro, #d4ecd9);
+  padding: 0.2rem 0.6rem;
+  border-radius: 9999px;
+  white-space: nowrap;
+}
+
+.cfg-rol-permisos-modulos {
+  font-size: 0.78rem;
+  color: var(--text-muted, #4a5b4e);
+  line-height: 1.4;
+  flex: 1;
+  min-width: 0;
+  overflow: hidden;
+  text-overflow: ellipsis;
+  white-space: nowrap;
+}
+
+/* ── Footer de la tarjeta ─────────────────────────────────────────── */
+.cfg-rol-footer {
+  display: flex;
+  gap: 0.5rem;
+  flex-wrap: wrap;
+}
+
+.cfg-rol-btn {
+  flex: 1;
+  min-width: 100px;
+  padding: 0.5rem 0.75rem;
+  border: none;
+  border-radius: 0.75rem;
+  font-size: 0.78rem;
+  font-weight: 700;
+  cursor: pointer;
+  transition: all 0.2s ease;
+  display: inline-flex;
+  align-items: center;
+  justify-content: center;
+  gap: 0.4rem;
+}
+
+.cfg-rol-btn--ver {
+  background: var(--verde-corteza, #eaf6e6);
+  color: var(--verde-cosecha, #256f48);
+}
+
+.cfg-rol-btn--ver:hover {
+  background: var(--verde-claro, #d4ecd9);
+  transform: translateY(-1px);
+}
+
+.cfg-rol-btn--editar {
+  background: linear-gradient(135deg, var(--verde-cosecha, #256f48), var(--dorado, #d4a53c));
+  color: #fff;
+  box-shadow: 0 4px 12px rgba(37, 111, 72, 0.2);
+}
+
+.cfg-rol-btn--editar:hover {
+  transform: translateY(-2px);
+  box-shadow: 0 6px 20px rgba(37, 111, 72, 0.3), 0 0 20px rgba(212, 165, 60, 0.2);
+}
+
+/* ── Modal de permisos ────────────────────────────────────────────── */
+.cfg-editar-rol__fields {
+  display: grid;
+  grid-template-columns: 1fr 1fr;
+  gap: 1rem;
+  margin-bottom: 1.5rem;
+}
+
+@media (max-width: 640px) {
+  .cfg-editar-rol__fields {
+    grid-template-columns: 1fr;
+  }
+}
+
+.cfg-permisos-helper {
+  margin-bottom: 1rem;
+}
+
+.cfg-helper-text {
+  font-size: 0.85rem;
+  color: var(--text-muted, #4a5b4e);
+  line-height: 1.6;
+  padding: 0.75rem 1rem;
+  background: rgba(212, 165, 60, 0.05);
+  border-radius: 0.75rem;
+  border-left: 3px solid var(--dorado, #d4a53c);
+}
+
+.cfg-helper-icon {
+  margin-right: 0.5rem;
+}
+
+.cfg-helper-note {
+  font-size: 0.78rem;
+  color: var(--dorado-oscuro, #b8860b);
+  font-weight: 600;
+}
+
+/* ── Tabla de permisos ────────────────────────────────────────────── */
+.cfg-permisos-table-wrap {
+  overflow-x: auto;
+  margin: 1rem 0;
+  border: 1px solid rgba(212, 165, 60, 0.1);
+  border-radius: 1rem;
+  overflow: hidden;
+}
+
+.cfg-permisos-table {
+  width: 100%;
+  border-collapse: collapse;
+  font-size: 0.82rem;
+  min-width: 600px;
+}
+
+.cfg-permisos-table thead th {
+  background: var(--verde-corteza, #eaf6e6);
+  padding: 0.75rem 0.75rem;
+  font-size: 0.68rem;
+  font-weight: 800;
+  color: var(--dorado-oscuro, #b8860b);
+  text-transform: uppercase;
+  letter-spacing: 0.06em;
+  text-align: left;
+  border-bottom: 2px solid rgba(212, 165, 60, 0.1);
+  white-space: nowrap;
+}
+
+.cfg-permisos-table tbody tr {
+  border-bottom: 1px solid rgba(212, 165, 60, 0.06);
+  transition: background 0.2s ease;
+}
+
+.cfg-permisos-table tbody tr:hover {
+  background: rgba(212, 165, 60, 0.04);
+}
+
+.cfg-permisos-table tbody tr:last-child {
+  border-bottom: none;
+}
+
+.cfg-row-inactive {
+  opacity: 0.5;
+}
+
+.cfg-row-active {
+  background: rgba(80, 164, 117, 0.04);
+}
+
+.cfg-cell-modulo {
+  padding: 0.6rem 0.75rem;
+  display: flex;
+  align-items: center;
+  gap: 0.5rem;
+  font-weight: 700;
+  color: var(--text-primary, #1a2a1f);
+}
+
+.cfg-modulo-icon {
+  font-size: 1.1rem;
+}
+
+.cfg-modulo-label {
+  font-weight: 700;
+}
+
+.cfg-cell-desc {
+  padding: 0.6rem 0.75rem;
+  color: var(--text-muted, #4a5b4e);
+  font-size: 0.78rem;
+}
+
+.cfg-cell-action {
+  text-align: center;
+  padding: 0.6rem 0.5rem;
+  min-width: 60px;
+}
+
+/* ── Elementos de la tabla ────────────────────────────────────────── */
+.cfg-permiso-check {
+  font-size: 1.1rem;
+}
+
+.cfg-permiso-empty {
+  font-size: 1.1rem;
+  color: var(--text-faint, #8f9e92);
+}
+
+.cfg-permiso-disabled {
+  color: var(--text-faint, #8f9e92);
+  font-size: 1.1rem;
+}
+
+/* ── Toggle switch premium ────────────────────────────────────────── */
+.cfg-permiso-toggle {
+  position: relative;
+  display: inline-block;
+  width: 42px;
+  height: 24px;
+  cursor: pointer;
+}
+
+.cfg-permiso-checkbox {
+  opacity: 0;
+  width: 0;
+  height: 0;
+}
+
+.cfg-permiso-slider {
+  position: absolute;
+  inset: 0;
+  background: var(--verde-claro, #d4ecd9);
+  border-radius: 9999px;
+  transition: all 0.25s ease;
+  box-shadow: inset 0 1px 3px rgba(0, 0, 0, 0.1);
+}
+
+.cfg-permiso-slider::before {
+  content: '';
+  position: absolute;
+  height: 18px;
+  width: 18px;
+  left: 3px;
+  bottom: 3px;
+  background: #fff;
+  border-radius: 50%;
+  transition: all 0.25s ease;
+  box-shadow: 0 1px 4px rgba(0, 0, 0, 0.15);
+}
+
+.cfg-permiso-checkbox:checked + .cfg-permiso-slider {
+  background: linear-gradient(135deg, var(--verde-cosecha, #256f48), var(--dorado, #d4a53c));
+}
+
+.cfg-permiso-checkbox:checked + .cfg-permiso-slider::before {
+  transform: translateX(18px);
+}
+
+.cfg-permiso-checkbox:disabled + .cfg-permiso-slider {
+  opacity: 0.4;
+  cursor: not-allowed;
+}
+
+/* ── Leyenda ───────────────────────────────────────────────────────── */
+.cfg-permisos-leyenda {
+  display: flex;
+  gap: 1.5rem;
+  flex-wrap: wrap;
+  padding: 0.75rem 0;
+  border-top: 1px solid rgba(212, 165, 60, 0.1);
+}
+
+.cfg-leyenda-item {
+  display: flex;
+  align-items: center;
+  gap: 0.4rem;
+  font-size: 0.75rem;
+  color: var(--text-muted, #4a5b4e);
+}
+
+.cfg-leyenda-check { font-size: 1rem; }
+.cfg-leyenda-empty { font-size: 1rem; }
+.cfg-leyenda-disabled { font-size: 1rem; }
+.cfg-leyenda-toggle-on { font-size: 1rem; }
+.cfg-leyenda-toggle-off { font-size: 1rem; }
+
+/* ── Resumen ──────────────────────────────────────────────────────── */
+.cfg-permisos-resumen {
+  padding: 0.75rem 0 0;
+  border-top: 1px solid rgba(212, 165, 60, 0.1);
+  display: flex;
+  justify-content: flex-end;
+}
+
+.cfg-resumen-total {
+  font-size: 0.82rem;
+  color: var(--text-muted, #4a5b4e);
+}
+
+.cfg-resumen-total strong {
+  color: var(--verde-cosecha, #256f48);
+  font-weight: 800;
+}
+
+/* ── Loading ──────────────────────────────────────────────────────── */
+.cfg-loading {
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  justify-content: center;
+  gap: 1rem;
+  padding: 3rem;
+  color: var(--text-muted, #4a5b4e);
+}
+
+.cfg-loading__spinner {
+  width: 40px;
+  height: 40px;
+  border: 3px solid var(--verde-claro, #d4ecd9);
+  border-top-color: var(--dorado, #d4a53c);
+  border-right-color: var(--verde-prado, #368a5c);
+  border-radius: 50%;
+  animation: cfgSpin 0.8s linear infinite;
+}
+
+@keyframes cfgSpin {
+  to { transform: rotate(360deg); }
+}
+
+/* ── Modal tamaño grande ──────────────────────────────────────────── */
+.cfg-modal--lg {
+  max-width: 900px;
+}
+
+/* ── Responsive ───────────────────────────────────────────────────── */
+@media (max-width: 768px) {
+  .cfg-toolbar {
+    flex-direction: column;
+    align-items: flex-start;
+  }
+  
+  .cfg-toolbar__help {
+    max-width: 100%;
+    width: 100%;
+  }
+  
+  .cfg-modal--lg {
+    max-width: 100%;
+  }
+  
+  .cfg-permisos-table {
+    font-size: 0.75rem;
+    min-width: 500px;
+  }
+  
+  .cfg-cell-modulo {
+    padding: 0.4rem 0.5rem;
+  }
+  
+  .cfg-cell-desc {
+    padding: 0.4rem 0.5rem;
+  }
+  
+  .cfg-cell-action {
+    padding: 0.4rem 0.3rem;
+    min-width: 40px;
+  }
+  
+  .cfg-permiso-toggle {
+    width: 36px;
+    height: 20px;
+  }
+  
+  .cfg-permiso-slider::before {
+    height: 14px;
+    width: 14px;
+    left: 3px;
+    bottom: 3px;
+  }
+  
+  .cfg-permiso-checkbox:checked + .cfg-permiso-slider::before {
+    transform: translateX(16px);
+  }
+}

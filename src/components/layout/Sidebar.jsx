@@ -1,113 +1,263 @@
-import { useState } from "react";
-import { NavLink, useNavigate } from "react-router-dom";
-import { logout } from "../../services/AuthService";
-import "./Sidebar.css";
+import { useMemo, useEffect } from "react";
+import { useNavigate, useLocation } from "react-router-dom";
 
-const menu = [
+import { getUsuarioActual } from "../../services/AuthService";
+import { usuarioTienePermiso } from "../../services/dashboard.service";
+
+import icoCow from "../../assets/icons/cow.png";
+import icoDashboard from "../../assets/icons/dashboard.png";
+import icoReproduccion from "../../assets/icons/reproduccion.png";
+import icoSalud from "../../assets/icons/salud.png";
+import icoInventario from "../../assets/icons/inventario.png";
+import icoPotreros from "../../assets/icons/potreros.png";
+import icoFinanzas from "../../assets/icons/finanzas.png";
+import icoAlimentacion from "../../assets/icons/alimentacion.png";
+import icoConfiguracion from "../../assets/icons/configuracion.png";
+
+import "../../styles/Sidebar.css";
+
+const MENU = [
   {
-    label: "Principal",
+    seccion: "Principal",
     items: [
-      { to: "/dashboard", icon: "⊞", label: "Dashboard" },
+      {
+        label: "Dashboard",
+        href: "/dashboard",
+        img: icoDashboard,
+      },
     ],
   },
   {
-    label: "Ganadería",
+    seccion: "Producción",
     items: [
-      { to: "/ganado",       icon: "🐄", label: "Ganado" },
-      { to: "/reproduccion", icon: "🧬", label: "Reproducción" },
-      { to: "/eventos",      icon: "💉", label: "Sanidad" },
+      {
+        label: "Ganado",
+        href: "/ganado",
+        img: icoCow,
+        permiso: "ganado.ver",
+      },
+      {
+        label: "Reproducción",
+        href: "/reproduccion",
+        img: icoReproduccion,
+        permiso: "reproduccion.ver",
+      },
+      {
+        label: "Salud",
+        href: "/eventos",
+        img: icoSalud,
+        permiso: "salud.ver",
+      },
+      {
+        label: "Alimentación",
+        href: "/alimentacion",
+        img: icoAlimentacion,
+        permiso: "alimentacion.ver",
+      },
     ],
   },
   {
-    label: "Operaciones",
+    seccion: "Recursos",
     items: [
-      { to: "/inventario",   icon: "📦", label: "Inventario" },
-      { to: "/alimentacion", icon: "🌾", label: "Alimentación" },
-      { to: "/ventas",     icon: "💰", label: "Ventas" },
+      {
+        label: "Inventario",
+        href: "/inventario",
+        img: icoInventario,
+        permiso: "productos.ver",
+      },
+      {
+        label: "Potreros",
+        href: "/pasturas",
+        img: icoPotreros,
+        permiso: "potreros.ver",
+      },
     ],
   },
   {
-    label: "Reportes",
+    seccion: "Finanzas",
     items: [
-      { to: "/reportes/ganado",   icon: "📋", label: "Rep. Ganado" },
-      { to: "/reportes/ingresos", icon: "📈", label: "Rep. Ingresos" },
-      { to: "/reportes/stock",    icon: "📊", label: "Rep. Stock" },
+      {
+        label: "Ventas",
+        href: "/ventas",
+        img: icoFinanzas,
+        permiso: "ventas.ver",
+      },
+      {
+        label: "Cockpit",
+        href: "/finanzas",
+        img: icoFinanzas,
+        permiso: "cockpit.ver",
+      },
     ],
   },
   {
-    label: "Configuración",
+    seccion: "Sistema",
     items: [
-      { to: "/configuracion/finca",    icon: "🏡", label: "Finca" },
-      { to: "/configuracion/usuarios", icon: "👤", label: "Usuarios" },
-      { to: "/configuracion/roles",    icon: "🛡️", label: "Roles" },
+      {
+        label: "Configuración",
+        href: "/configuracion/finca",
+        img: icoConfiguracion,
+        permiso: "configuracion.ver",
+      },
     ],
   },
 ];
 
-export default function Sidebar() {
-  const navigate  = useNavigate();
-  const [collapsed, setCollapsed] = useState(false);
+export default function Sidebar({
+  open = false,
+  collapsed = false,
+  onClose,
+  onToggleCollapse,
 
-  const handleLogout = () => {
-    logout();
-    navigate("/login");
+  mobileOpen = false,
+  onMobileClose,
+  onToggle,
+}) {
+  const navigate = useNavigate();
+  const location = useLocation();
+  const usuario = getUsuarioActual();
+
+  const sidebarOpen = open || mobileOpen;
+  const closeSidebar = onClose || onMobileClose;
+  const toggleCollapse = onToggleCollapse || onToggle;
+
+  useEffect(() => {
+    if (sidebarOpen) {
+      closeSidebar?.();
+    }
+    // eslint-disable-next-line react-hooks/exhaustive-deps
+  }, [location.pathname]);
+
+  const isMobile = () => window.innerWidth <= 768;
+
+  const isActive = (href) => {
+    return location.pathname.startsWith(href);
   };
 
+  const handleNavigate = (href) => {
+    navigate(href);
+
+    if (isMobile()) {
+      closeSidebar?.();
+    }
+  };
+
+  const handleLogoClick = () => {
+    if (sidebarOpen && isMobile()) {
+      closeSidebar?.();
+      return;
+    }
+
+    navigate("/dashboard");
+  };
+
+  const menuPermitido = useMemo(() => {
+    return MENU.map((grupo) => ({
+      ...grupo,
+      items: grupo.items.filter((item) =>
+        usuarioTienePermiso(usuario, item.permiso)
+      ),
+    })).filter((grupo) => grupo.items.length > 0);
+  }, [usuario]);
+
   return (
-    <aside className={`gc-sidebar ${collapsed ? "collapsed" : ""}`}>
-      {/* Header */}
-      <div className="gc-sb-header">
-        <div className="gc-sb-logo">
-          <div className="gc-sb-shield">🐂</div>
-          {!collapsed && (
-            <div>
-              <span className="gc-sb-brand">GanaControl</span>
-              <span className="gc-sb-subbrand">Gestión Ganadera</span>
-            </div>
-          )}
+    <>
+      <div
+        className={`gc-sidebar-overlay ${sidebarOpen ? "active" : ""}`}
+        onClick={closeSidebar}
+        aria-hidden="true"
+      />
+
+      <aside
+        className={`gc-sidebar ${collapsed ? "collapsed is-collapsed" : ""} ${
+          sidebarOpen ? "mobile-open is-open" : ""
+        }`}
+      >
+        <div className="gc-sidebar__mobile-head">
+          <button
+            type="button"
+            className="gc-sidebar__mobile-close"
+            onClick={closeSidebar}
+            aria-label="Cerrar menú"
+          >
+            ☰
+          </button>
         </div>
-        <button
-          className="gc-sb-toggle"
-          onClick={() => setCollapsed(!collapsed)}
-          title={collapsed ? "Expandir" : "Colapsar"}
+
+        <div
+          className="gc-sidebar__logo"
+          onClick={handleLogoClick}
+          style={{ cursor: "pointer" }}
         >
-          {collapsed ? "›" : "‹"}
-        </button>
-      </div>
-
-      {/* Nav */}
-      <nav className="gc-sb-nav">
-        {menu.map((group) => (
-          <div key={group.label} className="gc-sb-group">
-            {!collapsed && (
-              <span className="gc-sb-group-label">{group.label}</span>
-            )}
-            {group.items.map((item) => (
-              <NavLink
-                key={item.to}
-                to={item.to}
-                className={({ isActive }) =>
-                  `gc-sb-link ${isActive ? "active" : ""}`
-                }
-                title={collapsed ? item.label : ""}
-              >
-                <span className="gc-sb-icon">{item.icon}</span>
-                {!collapsed && (
-                  <span className="gc-sb-link-label">{item.label}</span>
-                )}
-              </NavLink>
-            ))}
+          <div className="gc-sidebar__logo-icon">
+            <img
+              src={icoCow}
+              alt="GanaControl"
+              style={{
+                width: 24,
+                height: 24,
+                objectFit: "contain",
+              }}
+            />
           </div>
-        ))}
-      </nav>
 
-      {/* Footer */}
-      <div className="gc-sb-footer">
-        <button className="gc-sb-logout" onClick={handleLogout}>
-          <span className="gc-sb-icon">⏻</span>
-          {!collapsed && <span>Cerrar sesión</span>}
-        </button>
-      </div>
-    </aside>
+          <div className="gc-sidebar__logo-text">
+            <span className="gc-sidebar__logo-name">GanaControl</span>
+            <span className="gc-sidebar__logo-tag">Gestión Ganadera</span>
+          </div>
+        </div>
+
+        <nav className="gc-sidebar__nav">
+          {menuPermitido.map((grupo) => (
+            <div key={grupo.seccion} className="gc-sidebar__group">
+              <div className="gc-sidebar__section-label">{grupo.seccion}</div>
+
+              {grupo.items.map((item) => {
+                const active = isActive(item.href);
+
+                return (
+                  <button
+                    key={item.href}
+                    type="button"
+                    className={`gc-sidebar__item ${active ? "active" : ""}`}
+                    data-label={item.label}
+                    onClick={() => handleNavigate(item.href)}
+                  >
+                    <span className="gc-sidebar__item-icon">
+                      <img
+                        src={item.img}
+                        alt={item.label}
+                        style={{
+                          width: 22,
+                          height: 22,
+                          objectFit: "contain",
+                          filter: "brightness(0) invert(1)",
+                          opacity: active ? 1 : 0.75,
+                        }}
+                      />
+                    </span>
+
+                    <span className="gc-sidebar__item-label">
+                      {item.label}
+                    </span>
+                  </button>
+                );
+              })}
+            </div>
+          ))}
+        </nav>
+
+        <div className="gc-sidebar__collapse">
+          <button
+            className="gc-sidebar__collapse-btn"
+            onClick={toggleCollapse}
+            type="button"
+          >
+            <span className="gc-sidebar__collapse-icon">◀</span>
+            <span className="gc-sidebar__item-label">Colapsar</span>
+          </button>
+        </div>
+      </aside>
+    </>
   );
 }

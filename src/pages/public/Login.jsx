@@ -1,130 +1,210 @@
 import { useState } from "react";
-import { Navigate, useLocation, useNavigate } from "react-router-dom";
-import { login, isAuthenticated } from "../../services/AuthService";
-import { mensajeError } from "../../services/api";
+import { useNavigate } from "react-router-dom";
+import { login, loginConGoogle } from "../../services/AuthService";
+import GoogleLoginButton from "./GoogleLoginButton";
 import "../../styles/Login.css";
+
+// ICONOS
+import cowIcon from "../../assets/icons/cow.png";
+import saludIcon from "../../assets/icons/salud.png";
+import finanzasIcon from "../../assets/icons/finanzas.png";
+import dashboardIcon from "../../assets/icons/dashboard.png";
+
+// reutilizados para inputs (puedes cambiarlos después)
+import userIcon from "../../assets/icons/configuracion.png";
+import lockIcon from "../../assets/icons/contraseña.png";
 
 export default function Login() {
   const navigate = useNavigate();
-  const location = useLocation();
-
-  const [active,     setActive]     = useState(false);
-  const [correo,     setCorreo]     = useState("");
+  const [correo, setCorreo] = useState("");
   const [contrasena, setContrasena] = useState("");
-  const [error,      setError]      = useState("");
-  const [cargando,   setCargando]   = useState(false);
-  const [aviso,      setAviso]      = useState("");
+  const [error, setError] = useState("");
+  const [cargando, setCargando] = useState(false);
 
-  if (isAuthenticated()) return <Navigate to="/dashboard" replace />;
-
-  const handleSubmit = async (e) => {
-    e.preventDefault();
-    setError("");
+  const handleLogin = async () => {
     if (!correo || !contrasena) {
-      setError("Ingresa tu correo y contraseña.");
+      setError("Por favor ingresa correo y contraseña.");
       return;
     }
+
     setCargando(true);
+    setError("");
+
     try {
-      await login(correo.trim(), contrasena);
-      navigate(location.state?.from || "/dashboard", { replace: true });
+      const res = await login(correo, contrasena);
+
+      if (res?.ok) {
+        navigate("/dashboard");
+      } else {
+        setError(res?.mensaje || "Credenciales incorrectas.");
+      }
     } catch (err) {
-      setError(err?.mensaje === "Credenciales inválidas"
-        ? "Correo o contraseña incorrectos."
-        : `No se pudo iniciar sesión: ${mensajeError(err)}`);
+      setError(err?.mensaje || "Error al conectar con el servidor.");
     } finally {
       setCargando(false);
     }
   };
 
+  const handleGoogle = async (credential) => {
+    if (!credential) return;
+    setCargando(true);
+    setError("");
+
+    const res = await loginConGoogle(credential);
+    setCargando(false);
+
+    if (res?.ok) {
+      navigate("/dashboard");
+    } else {
+      setError(res?.mensaje || "No se pudo iniciar sesión con Google.");
+    }
+  };
+
+  const handleSubmit = async (e) => {
+    e.preventDefault();
+    await handleLogin();
+  };
+
   return (
     <div className="login-page">
-    <div className={`container ${active ? "right-panel-active" : ""}`} id="container">
+      <div className="login-visual">
+        <div className="login-visual__grid"></div>
+        <div className="login-visual__glow"></div>
 
-      {/* Solicitar acceso: las cuentas las crea el administrador de la finca */}
-      <div className="form-container register-container">
-        <form onSubmit={(e) => e.preventDefault()}>
-          <h1>Solicitar acceso</h1>
-          <p className="login-info">
-            Las cuentas de GanaControl las crea el administrador de la finca.
-            Comunícate con él para que te asigne un usuario y un rol.
+        {/* LOGO */}
+        <div className="login-visual__logo">
+          <div className="login-visual__logo-icon">
+            <img src={cowIcon} alt="logo" />
+          </div>
+          <div>
+            <span className="login-visual__logo-name">GanaControl</span>
+            <span className="login-visual__logo-tag">Gestión Ganadera</span>
+          </div>
+        </div>
+
+        <div className="login-visual__content">
+          <h1 className="login-visual__h1">
+            El control total de<span> su finca, digital.</span>
+          </h1>
+
+          <p className="login-visual__p">
+            Gestione ganado, reproducción, sanidad, inventario y finanzas
+            desde una sola plataforma diseñada para el campo colombiano.
           </p>
-          <button type="button" onClick={() => setActive(false)}>Volver</button>
-        </form>
-      </div>
 
-      {/* Login */}
-      <div className="form-container login-container">
-        <form onSubmit={handleSubmit} noValidate>
-          <h1>Iniciar Sesión</h1>
-
-          <input
-            type="email"
-            placeholder="Correo Electrónico"
-            autoComplete="username"
-            value={correo}
-            onChange={(e) => setCorreo(e.target.value)}
-          />
-          <input
-            type="password"
-            placeholder="Contraseña"
-            autoComplete="current-password"
-            value={contrasena}
-            onChange={(e) => setContrasena(e.target.value)}
-          />
-
-          {error && <p className="login-error" role="alert">{error}</p>}
-
-          <div className="content">
-            <div className="pass-link">
-              <a href="#" onClick={(e) => { e.preventDefault(); setAviso("Pídele al administrador de la finca que restablezca tu contraseña."); }}>
-                ¿Olvidaste tu contraseña?
-              </a>
-            </div>
+          {/* FEATURES */}
+          <div className="login-visual__features">
+            {[
+              [cowIcon, "Trazabilidad bovina completa"],
+              [saludIcon, "Alertas sanitarias automáticas"],
+              [finanzasIcon, "Facturación sin errores"],
+              [dashboardIcon, "Reportes ejecutivos en tiempo real"],
+            ].map(([ico, txt]) => (
+              <div key={txt} className="login-visual__feature">
+                <img src={ico} alt="" className="login-visual__feature-ico" />
+                <span className="login-visual__feature-text">{txt}</span>
+              </div>
+            ))}
           </div>
-          {aviso && <p className="login-info" style={{ margin: "0 0 10px", fontSize: 13 }}>{aviso}</p>}
+        </div>
 
-          <button type="submit" disabled={cargando}>
-            {cargando ? "Ingresando..." : "Ingresar"}
-          </button>
-
-          <span>Ingresa tus datos para continuar</span>
-        </form>
-      </div>
-
-      {/* Overlay */}
-      <div className="overlay-container">
-        <div className="overlay">
-
-          <div className="overlay-panel overlay-left">
-            <h1>Bienvenido de nuevo!</h1>
-            <p>
-              Para mantenerse conectado con nosotros, por favor inicie sesión
-              con su información personal
-            </p>
-
-            <button type="button" className="ghost" onClick={() => setActive(false)}>
-              Iniciar Sesión
-              <i className="lni lni-arrow-left login"></i>
-            </button>
-          </div>
-
-          <div className="overlay-panel overlay-right">
-            <h1 className="title">Tu finca, en tus manos</h1>
-            <p>
-              ¿Aún no tienes cuenta? Solicita acceso al administrador de tu finca
-            </p>
-
-            <button type="button" className="ghost" onClick={() => setActive(true)}>
-              Solicitar acceso
-              <i className="lni lni-arrow-right register"></i>
-            </button>
-          </div>
-
+        <div className="login-visual__footer">
+          © 2025 GanaControl — Hecho en Colombia
         </div>
       </div>
 
-    </div>
+      <div className="login-form-panel">
+        <div className="login-form-box">
+          <button
+            type="button"
+            className="login-form-box__back"
+            onClick={() => navigate("/")}
+          >
+            ← Volver al inicio
+          </button>
+
+          <div className="login-form-box__eyebrow">Bienvenido de nuevo</div>
+          <h1 className="login-form-box__h1">Iniciar Sesión</h1>
+          <p className="login-form-box__sub">
+            Ingresa tus credenciales para acceder al sistema.
+          </p>
+
+          <form onSubmit={handleSubmit}>
+            {/* CORREO */}
+            <div className="login-field">
+              <label className="login-label">Correo electrónico</label>
+              <div className="login-input-wrap">
+                <img src={userIcon} alt="" className="login-input-ico" />
+                <input
+                  className="login-input"
+                  type="email"
+                  name="correo"
+                  autoComplete="email"
+                  placeholder="correo@ejemplo.com"
+                  value={correo}
+                  onChange={(e) => setCorreo(e.target.value)}
+                  disabled={cargando}
+                />
+              </div>
+            </div>
+
+            {/* CONTRASEÑA */}
+            <div className="login-field">
+              <label className="login-label">Contraseña</label>
+              <div className="login-input-wrap">
+                <img src={lockIcon} alt="" className="login-input-ico" />
+                <input
+                  className="login-input"
+                  type="password"
+                  name="contrasena"
+                  autoComplete="current-password"
+                  placeholder="••••••••"
+                  value={contrasena}
+                  onChange={(e) => setContrasena(e.target.value)}
+                  disabled={cargando}
+                />
+              </div>
+            </div>
+
+            {/* ERROR */}
+            {error && (
+              <div className="login-error">
+                <span className="login-error-icon"></span>
+                {error}
+              </div>
+            )}
+
+            <div className="login-opts">
+              <label className="login-opts__remember">
+                <input type="checkbox" /> Recordarme
+              </label>
+              <span
+                className="login-opts__forgot"
+                style={{ cursor: "pointer" }}
+                onClick={() => navigate("/forgot-password")}
+              >
+                ¿Olvidaste tu contraseña?
+              </span>
+            </div>
+
+            <button
+              type="submit"
+              className="login-submit"
+              disabled={cargando}
+            >
+              {cargando ? (
+                <>
+                  <div className="login-spinner"></div> Ingresando...
+                </>
+              ) : (
+                "Ingresar al sistema →"
+              )}
+            </button>
+          </form>
+
+          <GoogleLoginButton onCredential={handleGoogle} disabled={cargando} />
+        </div>
+      </div>
     </div>
   );
 }

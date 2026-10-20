@@ -1,124 +1,168 @@
-import { BrowserRouter, Routes, Route, Navigate } from "react-router-dom";
+import { HashRouter, Routes, Route, Navigate } from "react-router-dom";
+import { getUsuarioActual } from "../services/AuthService";
 
-// Layout privado
+// Layout
 import PrivateLayout from "../components/layout/PrivateLayout";
 
-// Páginas públicas
-import Home              from "../pages/public/Home";
-import Login             from "../pages/public/Login";
+// Públicas
+import Home from "../pages/public/Home";
+import Login from "../pages/public/Login";
+import ForgotPassword from "../pages/public/ForgotPassword";
+import ResetPassword from "../pages/public/ResetPassword";
 
 // Dashboard
 import DashBoard from "../pages/private/dashboard/DashBoard";
 
-// Ganado
-import ListadoGanado   from "../pages/private/ganado/ListadoGanado";
-
-// Reproducción
-import Reproduccion from "../pages/private/reproduccion/Reproduccion";
-
-// Eventos sanitarios / Vacunación / Salud
-import ListadoEventos  from "../pages/private/eventos/ListadoEventos";
-
-// Inventario
+// Privadas
+import ListadoGanado from "../pages/private/ganado/ListadoGanado";
+import ListadoAlimentacion from "../pages/private/alimentacion/ListadoAlimentacion";
+import ListadoEventos from "../pages/private/eventos/ListadoEventos";
 import ListadoInventario from "../pages/private/inventario/ListadoInventario";
-
-// Alimentación
-import Alimentacion from "../pages/private/inventario/Alimentacion";
-
-// Ventas
-import ListadoVentas   from "../pages/private/ventas/ListadoVentas";
-
-// Pasturas
-import MallaDigital from "../pages/private/pasturas/MallaDigital";
-
-// Finanzas
+import Reproduccion from "../pages/private/reproduccion/Reproduccion";
 import CockpitFinanciero from "../pages/private/finanzas/CockpitFinanciero";
+import Potreros from "../pages/private/pasturas/Potreros";
+import ListadoVentas from "../pages/private/ventas/ListadoVentas";
+import Configuracion from "../pages/private/configuracion/Configuracion";
 
-// Mando Central
-import MandoCentral from "../pages/private/mando/MandoCentral";
+function ProtectedPermission({ permiso, children }) {
+  const usuario = getUsuarioActual();
 
-// Reportes
-import ReporteGanado   from "../pages/private/reportes/ReporteGanado";
-import ReporteIngresos from "../pages/private/reportes/ReporteIngresos";
-import ReporteStock    from "../pages/private/reportes/ReporteStock";
+  if (!usuario) {
+    return <Navigate to="/login" replace />;
+  }
 
-// Configuración
-import Finca    from "../pages/private/configuracion/Finca";
-import Usuarios from "../pages/private/configuracion/Usuarios";
-import Roles    from "../pages/private/configuracion/Roles";
+  // Admin entra a todo
+  if (usuario?.rol === "Administrador") {
+    return children;
+  }
 
-function AppRouter() {
+  const permisos = usuario?.permisos || [];
+
+  if (!permiso || permisos.includes(permiso)) {
+    return children;
+  }
+
+  return <Navigate to="/dashboard" replace />;
+}
+
+export default function AppRouter() {
   return (
-    <BrowserRouter>
+    <HashRouter>
       <Routes>
 
-        {/* ── Públicas ── */}
-        <Route path="/"                   element={<Home />} />
-        <Route path="/login"              element={<Login />} />
-        <Route path="/registro"           element={<Navigate to="/login" replace />} />
-        <Route path="/recuperar-password" element={<Navigate to="/login" replace />} />
+        {/* ═══════════════════════════════
+            RUTAS PÚBLICAS
+        ═══════════════════════════════ */}
+        <Route path="/" element={<Home />} />
+        <Route path="/login" element={<Login />} />
+        <Route path="/forgot-password" element={<ForgotPassword />} />
+        <Route path="/reset-password" element={<ResetPassword />} />
 
-        {/* ── Privadas (requieren auth) ── */}
+        {/* ═══════════════════════════════
+            RUTAS PRIVADAS
+        ═══════════════════════════════ */}
         <Route element={<PrivateLayout />}>
 
-          {/* Dashboard */}
           <Route path="/dashboard" element={<DashBoard />} />
 
-          {/* Ganado */}
-          <Route path="/ganado"            element={<ListadoGanado />} />
-          <Route path="/ganado/registrar"  element={<Navigate to="/ganado" replace />} />
-          <Route path="/ganado/:id"        element={<Navigate to="/ganado" replace />} />
-          <Route path="/ganado/:id/editar" element={<Navigate to="/ganado" replace />} />
+          <Route
+            path="/ganado"
+            element={
+              <ProtectedPermission permiso="ganado.ver">
+                <ListadoGanado />
+              </ProtectedPermission>
+            }
+          />
 
-          {/* Reproducción */}
-          <Route path="/reproduccion" element={<Reproduccion />} />
+          <Route
+            path="/alimentacion"
+            element={
+              <ProtectedPermission permiso="alimentacion.ver">
+                <ListadoAlimentacion />
+              </ProtectedPermission>
+            }
+          />
 
-          {/* Eventos / Vacunación / Salud y Sanidad */}
-          <Route path="/eventos"           element={<ListadoEventos />} />
-          <Route path="/eventos/registrar" element={<Navigate to="/eventos" replace />} />
-          <Route path="/eventos/:id"       element={<Navigate to="/eventos" replace />} />
+          <Route
+            path="/eventos"
+            element={
+              <ProtectedPermission permiso="salud.ver">
+                <ListadoEventos />
+              </ProtectedPermission>
+            }
+          />
 
-          {/* Inventario */}
-          <Route path="/inventario"             element={<ListadoInventario />} />
-          <Route path="/inventario/productos"   element={<Navigate to="/inventario" replace />} />
-          <Route path="/inventario/registrar"   element={<Navigate to="/inventario" replace />} />
-          <Route path="/inventario/movimientos" element={<Navigate to="/inventario" replace />} />
+          <Route
+            path="/inventario"
+            element={
+              <ProtectedPermission permiso="productos.ver">
+                <ListadoInventario />
+              </ProtectedPermission>
+            }
+          />
 
-          {/* Alimentación */}
-          <Route path="/alimentacion" element={<Alimentacion />} />
+          <Route
+            path="/reproduccion"
+            element={
+              <ProtectedPermission permiso="reproduccion.ver">
+                <Reproduccion />
+              </ProtectedPermission>
+            }
+          />
 
-          {/* Ventas */}
-          <Route path="/ventas"           element={<ListadoVentas />} />
-          <Route path="/ventas/registrar" element={<Navigate to="/ventas" replace />} />
-          <Route path="/ventas/:id"       element={<Navigate to="/ventas" replace />} />
+          <Route
+            path="/finanzas"
+            element={
+              <ProtectedPermission permiso="cockpit.ver">
+                <CockpitFinanciero />
+              </ProtectedPermission>
+            }
+          />
 
-          {/* Pasturas / Malla Digital */}
-          <Route path="/pasturas" element={<MallaDigital />} />
+          <Route
+            path="/pasturas"
+            element={
+              <ProtectedPermission permiso="potreros.ver">
+                <Potreros />
+              </ProtectedPermission>
+            }
+          />
 
-          {/* Cockpit Financiero */}
-          <Route path="/finanzas" element={<CockpitFinanciero />} />
+          <Route
+            path="/ventas"
+            element={
+              <ProtectedPermission permiso="ventas.ver">
+                <ListadoVentas />
+              </ProtectedPermission>
+            }
+          />
 
-          {/* Mando Central */}
-          <Route path="/mando" element={<MandoCentral />} />
+          <Route
+            path="/configuracion/finca"
+            element={
+              <ProtectedPermission permiso="configuracion.ver">
+                <Configuracion />
+              </ProtectedPermission>
+            }
+          />
 
-          {/* Reportes */}
-          <Route path="/reportes/ganado"   element={<ReporteGanado />} />
-          <Route path="/reportes/ingresos" element={<ReporteIngresos />} />
-          <Route path="/reportes/stock"    element={<ReporteStock />} />
-
-          {/* Configuración */}
-          <Route path="/configuracion/finca"    element={<Finca />} />
-          <Route path="/configuracion/usuarios" element={<Usuarios />} />
-          <Route path="/configuracion/roles"    element={<Roles />} />
+          <Route
+            path="/configuracion/usuarios"
+            element={
+              <ProtectedPermission permiso="usuarios.ver">
+                <Configuracion />
+              </ProtectedPermission>
+            }
+          />
 
         </Route>
 
-        {/* Cualquier ruta desconocida → home */}
+        {/* ═══════════════════════════════
+            FALLBACK
+        ═══════════════════════════════ */}
         <Route path="*" element={<Navigate to="/" replace />} />
 
       </Routes>
-    </BrowserRouter>
+    </HashRouter>
   );
 }
-
-export default AppRouter;

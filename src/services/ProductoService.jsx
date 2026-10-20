@@ -18,3 +18,4 @@ export const getStockBajo      = ()       => api("/productos/stock-bajo");
 // ── ALIMENTACIÓN ──────────────────────────────────
 export const getAlimentacion   = ()       => api("/productos/alimentacion");
 export const crearAlimentacion = (datos)  => api("/productos/alimentacion", { method: "POST", body: JSON.stringify(datos) });
+export const eliminarAlimentacion = (id)  => api(`/productos/alimentacion/${id}`, { method: "DELETE" });

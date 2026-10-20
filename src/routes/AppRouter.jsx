@@ -6,39 +6,27 @@ import PrivateLayout from "../components/layout/PrivateLayout";
 // Páginas públicas
 import Home              from "../pages/public/Home";
 import Login             from "../pages/public/Login";
-import Registro          from "../pages/public/Registro";
-import RecuperarPassword from "../pages/public/RecuperarPassword";
 
 // Dashboard
 import DashBoard from "../pages/private/dashboard/DashBoard";
 
 // Ganado
 import ListadoGanado   from "../pages/private/ganado/ListadoGanado";
-import RegistrarGanado from "../pages/private/ganado/RegistrarGanado";
-import DetalleGanado   from "../pages/private/ganado/DetalleGanado";
-import EditarGanado    from "../pages/private/ganado/EditarGanado";
 
 // Reproducción
 import Reproduccion from "../pages/private/reproduccion/Reproduccion";
 
 // Eventos sanitarios / Vacunación / Salud
 import ListadoEventos  from "../pages/private/eventos/ListadoEventos";
-import RegistrarEvento from "../pages/private/eventos/RegistrarEvento";
-import DetalleEvento   from "../pages/private/eventos/DetalleEvento";
 
 // Inventario
 import ListadoInventario from "../pages/private/inventario/ListadoInventario";
-import ListadoProductos  from "../pages/private/inventario/ListadoInventario";
-import RegistrarProducto from "../pages/private/inventario/RegistrarProducto";
-import Movimientos       from "../pages/private/inventario/Movimientos";
 
 // Alimentación
 import Alimentacion from "../pages/private/inventario/Alimentacion";
 
 // Ventas
 import ListadoVentas   from "../pages/private/ventas/ListadoVentas";
-import RegistrarVentas from "../pages/private/ventas/RegistrarVentas";
-import DetalleVenta    from "../pages/private/ventas/DetalleVenta";
 
 // Pasturas
 import MallaDigital from "../pages/private/pasturas/MallaDigital";
@@ -67,8 +55,8 @@ function AppRouter() {
         {/* ── Públicas ── */}
         <Route path="/"                   element={<Home />} />
         <Route path="/login"              element={<Login />} />
-        <Route path="/registro"           element={<Registro />} />
-        <Route path="/recuperar-password" element={<RecuperarPassword />} />
+        <Route path="/registro"           element={<Navigate to="/login" replace />} />
+        <Route path="/recuperar-password" element={<Navigate to="/login" replace />} />
 
         {/* ── Privadas (requieren auth) ── */}
         <Route element={<PrivateLayout />}>
@@ -78,31 +66,31 @@ function AppRouter() {
 
           {/* Ganado */}
           <Route path="/ganado"            element={<ListadoGanado />} />
-          <Route path="/ganado/registrar"  element={<RegistrarGanado />} />
-          <Route path="/ganado/:id"        element={<DetalleGanado />} />
-          <Route path="/ganado/:id/editar" element={<EditarGanado />} />
+          <Route path="/ganado/registrar"  element={<Navigate to="/ganado" replace />} />
+          <Route path="/ganado/:id"        element={<Navigate to="/ganado" replace />} />
+          <Route path="/ganado/:id/editar" element={<Navigate to="/ganado" replace />} />
 
           {/* Reproducción */}
           <Route path="/reproduccion" element={<Reproduccion />} />
 
           {/* Eventos / Vacunación / Salud y Sanidad */}
           <Route path="/eventos"           element={<ListadoEventos />} />
-          <Route path="/eventos/registrar" element={<RegistrarEvento />} />
-          <Route path="/eventos/:id"       element={<DetalleEvento />} />
+          <Route path="/eventos/registrar" element={<Navigate to="/eventos" replace />} />
+          <Route path="/eventos/:id"       element={<Navigate to="/eventos" replace />} />
 
           {/* Inventario */}
           <Route path="/inventario"             element={<ListadoInventario />} />
-          <Route path="/inventario/productos"   element={<ListadoProductos />} />
-          <Route path="/inventario/registrar"   element={<RegistrarProducto />} />
-          <Route path="/inventario/movimientos" element={<Movimientos />} />
+          <Route path="/inventario/productos"   element={<Navigate to="/inventario" replace />} />
+          <Route path="/inventario/registrar"   element={<Navigate to="/inventario" replace />} />
+          <Route path="/inventario/movimientos" element={<Navigate to="/inventario" replace />} />
 
           {/* Alimentación */}
           <Route path="/alimentacion" element={<Alimentacion />} />
 
           {/* Ventas */}
           <Route path="/ventas"           element={<ListadoVentas />} />
-          <Route path="/ventas/registrar" element={<RegistrarVentas />} />
-          <Route path="/ventas/:id"       element={<DetalleVenta />} />
+          <Route path="/ventas/registrar" element={<Navigate to="/ventas" replace />} />
+          <Route path="/ventas/:id"       element={<Navigate to="/ventas" replace />} />
 
           {/* Pasturas / Malla Digital */}
           <Route path="/pasturas" element={<MallaDigital />} />

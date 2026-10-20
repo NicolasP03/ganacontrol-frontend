@@ -21,7 +21,8 @@ const menu = [
   {
     label: "Operaciones",
     items: [
-      { to: "/inventario", icon: "📦", label: "Inventario" },
+      { to: "/inventario",   icon: "📦", label: "Inventario" },
+      { to: "/alimentacion", icon: "🌾", label: "Alimentación" },
       { to: "/ventas",     icon: "💰", label: "Ventas" },
     ],
   },

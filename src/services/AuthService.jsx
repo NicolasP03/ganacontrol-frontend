@@ -1,24 +1,17 @@
 import api from "./api";
 
 // Login — guarda token y usuario en localStorage
-export const login = async (email, password) => {
+export const login = async (correo, contrasena) => {
   const data = await api("/auth/login", {
     method: "POST",
-    body: JSON.stringify({ email, password }),
+    body: JSON.stringify({ correo, contrasena }),
   });
-  if (data.token) {
+  if (data?.token) {
     localStorage.setItem("token", data.token);
     localStorage.setItem("usuario", JSON.stringify(data.usuario || {}));
   }
   return data;
 };
-
-// Registro de nuevo usuario
-export const registro = (datos) =>
-  api("/auth/registro", {
-    method: "POST",
-    body: JSON.stringify(datos),
-  });
 
 // Cerrar sesión
 export const logout = () => {
@@ -29,7 +22,9 @@ export const logout = () => {
 // Obtener usuario actual desde localStorage
 export const getUsuarioActual = () => {
   const u = localStorage.getItem("usuario");
-  return u ? JSON.parse(u) : null;
+  if (!u) return null;
+  const usuario = JSON.parse(u);
+  return { ...usuario, nombre: [usuario.nombres, usuario.apellidos].filter(Boolean).join(" ") };
 };
 
 // Verificar si hay sesión activa

@@ -3,6 +3,8 @@ import { isAuthenticated } from "../../services/AuthService";
 import Sidebar from "./Sidebar";
 import Navbar  from "./Navbar";
 import "./PrivateLayout.css";
+import "../../styles/Home.css";
+import "../../styles/Modulos.css";
 
 // Mapa de rutas → títulos para el Navbar
 const titulos = {
@@ -14,6 +16,7 @@ const titulos = {
   "/inventario":                  "Inventario",
   "/inventario/registrar":        "Registrar Producto",
   "/inventario/movimientos":      "Movimientos",
+  "/alimentacion":                "Alimentación",
   "/ventas":                      "Ventas",
   "/ventas/registrar":            "Registrar Venta",
   "/reportes/ganado":             "Reporte Ganado",
@@ -29,7 +32,7 @@ export default function PrivateLayout() {
 
   // Redirige al login si no hay sesión
   if (!isAuthenticated()) {
-    return <Navigate to="/login" replace />;
+    return <Navigate to="/login" replace state={{ from: location.pathname }} />;
   }
 
   const titulo = titulos[location.pathname] || "GanaControl";

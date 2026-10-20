@@ -1,1 +1,5 @@
-export default function CockpitFinanciero() { return <div style={{padding:'2rem'}}><h2>💰 Cockpit Financiero — Próximamente</h2></div>; }
+import EnConstruccion from "../../../components/ui/EnConstruccion";
+
+export default function CockpitFinanciero() {
+  return <EnConstruccion ico="💹" titulo="Cockpit Financiero" descripcion="Vista consolidada de ingresos y costos de la finca." />;
+}

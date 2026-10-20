@@ -1,37 +1,33 @@
-@import url("https://fonts.googleapis.com/css2?family=Poppins");
+@import url("https://fonts.googleapis.com/css2?family=Poppins:wght@400;700&display=swap");
 
-* {
+/* Todo el estilo vive bajo .login-page para no afectar al resto de la app */
+.login-page {
+    position: relative;
+    min-height: 100vh;
+    background-color: rgb(255, 255, 255);
+    font-family: "Poppins", sans-serif;
+    overflow: hidden;
+}
+
+.login-page * {
     box-sizing: border-box;
 }
 
-body {
-    height: 100%;
-    margin: 0;
-    display: flex;
-    background-color: rgb(255, 255, 255);
-    justify-content: center;
-    align-items: center;
-    flex-direction: column;
-    font-family: "Poppins", sans-serif;
-    overflow: hidden;
-    height: 100vh;
-}
-
-h1 {
+.login-page h1 {
     font-weight: 700;
     letter-spacing: -1.5px;
     margin: 0;
     margin-bottom: 15px;
 }
 
-h1.title {
+.login-page h1.title {
     font-size: 45px;
     line-height: 45px;
     margin: 0;
     text-shadow: 0 0 10px rgba(16, 64, 74, 0.5);
 }
 
-p {
+.login-page p {
     font-size: 14px;
     font-weight: 100;
     line-height: 20px;
@@ -40,12 +36,12 @@ p {
     text-shadow: 0 0 10px rgba(16, 64, 74, 0.5);
 }
 
-span {
+.login-page span {
     font-size: 14px;
     margin-top: 25px;
 }
 
-a {
+.login-page a {
     color: #333;
     font-size: 14px;
     text-decoration: none;
@@ -53,11 +49,11 @@ a {
     transition: 0.3s ease-in-out;
 }
 
-a:hover {
+.login-page a:hover {
     color: #4bb6b7;
 }
 
-.content {
+.login-page .content {
     display: flex;
     width: 100%;
     height: 50px;
@@ -65,25 +61,25 @@ a:hover {
     justify-content: space-around;
 }
 
-.content .checkbox {
+.login-page .content .checkbox {
     display: flex;
     align-items: center;
     justify-content: center;
 }
 
-.content input {
+.login-page .content input {
     accent-color: #333;
     width: 12px;
     height: 12px;
 }
 
-.content label {
+.login-page .content label {
     font-size: 14px;
     user-select: none;
     padding-left: 5px;
 }
 
-button {
+.login-page button {
     position: relative;
     border-radius: 20px;
     border: 1px solid grey;
@@ -98,49 +94,55 @@ button {
     transition: 0.3s ease-in-out;
 }
 
-button:hover {
+.login-page button:hover {
     letter-spacing: 3px;
 }
 
-button:active {
+.login-page button:active {
     transform: scale(0.95);
 }
 
-button:focus {
+.login-page button:focus {
     outline: none;
 }
 
-button.ghost {
+.login-page button:disabled {
+    opacity: 0.7;
+    cursor: wait;
+    letter-spacing: 1px;
+}
+
+.login-page button.ghost {
     background-color: rgba(225, 225, 225, 0.2);
     border: 2px solid #fff;
     color: #fff;
 }
 
-button.ghost i {
+.login-page button.ghost i {
     position: absolute;
     opacity: 0;
     transition: 0.3s ease-in-out;
 }
 
-button.ghost i.register {
+.login-page button.ghost i.register {
     right: 70px;
 }
 
-button.ghost i.login {
+.login-page button.ghost i.login {
     left: 70px;
 }
 
-button.ghost:hover i.register {
+.login-page button.ghost:hover i.register {
     right: 40px;
     opacity: 1;
 }
 
-button.ghost:hover i.login {
+.login-page button.ghost:hover i.login {
     left: 40px;
     opacity: 1;
 }
 
-form {
+.login-page form {
     background-color: #fff;
     display: flex;
     align-items: center;
@@ -151,7 +153,7 @@ form {
     text-align: center;
 }
 
-input {
+.login-page input {
     background-color: #eee;
     border-radius: 10px;
     border: none;
@@ -160,47 +162,68 @@ input {
     width: 100%;
 }
 
-.container {
+.login-page .login-error {
+    width: 100%;
+    margin: 4px 0 0;
+    padding: 8px 12px;
+    border-radius: 10px;
+    background: #fdecea;
+    color: #a3261b;
+    font-size: 13px;
+    font-weight: 400;
+    text-shadow: none;
+    line-height: 18px;
+    letter-spacing: 0;
+}
+
+.login-page .login-info {
+    color: #555;
+    text-shadow: none;
+    font-weight: 400;
+}
+
+.login-page .container {
     background-color: #fff;
     border-radius: 25px;
     box-shadow: 0 14px 28px rgba(0, 0, 0, 0.25),
                 0 10px 10px rgba(0, 0, 0, 0.22);
-    position: relative;
-    position: absolute; 
-    top: 50%; 
+    position: absolute;
+    top: 50%;
     left: 50%;
     transform: translate(-50%, -50%);
     overflow: hidden;
     width: 768px;
     max-width: 100%;
     min-height: 500px;
+    padding: 0;
+    margin: 0;
 }
 
-.form-container {
+.login-page .form-container {
     position: absolute;
     top: 0;
     height: 100%;
     transition: all 0.6s ease-in-out;
 }
 
-.login-container {
+.login-page .login-container {
     left: 0;
     width: 50%;
     z-index: 2;
 }
 
-.container.right-panel-active .login-container {
+.login-page .container.right-panel-active .login-container {
     transform: translateX(100%);
 }
 
-.register-container {
+.login-page .register-container {
     left: 0;
     width: 50%;
     opacity: 0;
     z-index: 1;
 }
 
-.container.right-panel-active .register-container {
+.login-page .container.right-panel-active .register-container {
     transform: translateX(100%);
     opacity: 1;
     z-index: 5;
@@ -218,7 +241,7 @@ input {
     }
 }
 
-.overlay-container {
+.login-page .overlay-container {
     position: absolute;
     top: 0;
     left: 50%;
@@ -229,11 +252,11 @@ input {
     z-index: 100;
 }
 
-.container.right-panel-active .overlay-container {
+.login-page .container.right-panel-active .overlay-container {
     transform: translateX(-100%);
 }
 
-.overlay {
+.login-page .overlay {
     background-image: url("../assets/imagen1.gif");
     background-repeat: no-repeat;
     background-size: cover;
@@ -247,7 +270,7 @@ input {
     transition: transform 0.6s ease-in-out;
 }
 
-.overlay::before {
+.login-page .overlay::before {
     content: "";
     position: absolute;
     left: 0;
@@ -257,11 +280,11 @@ input {
     background: linear-gradient(to top, rgba(46, 94, 109, 0.4) 40%, rgba(46, 94, 109, 0));
 }
 
-.container.right-panel-active .overlay {
+.login-page .container.right-panel-active .overlay {
     transform: translateX(50%);
 }
 
-.overlay-panel {
+.login-page .overlay-panel {
     position: absolute;
     display: flex;
     align-items: center;
@@ -276,28 +299,28 @@ input {
     transition: transform 0.6s ease-in-out;
 }
 
-.overlay-left {
+.login-page .overlay-left {
     transform: translateX(-20%);
 }
 
-.container.right-panel-active .overlay-left {
+.login-page .container.right-panel-active .overlay-left {
     transform: translateX(0);
 }
 
-.overlay-right {
+.login-page .overlay-right {
     right: 0;
     transform: translateX(0);
 }
 
-.container.right-panel-active .overlay-right {
+.login-page .container.right-panel-active .overlay-right {
     transform: translateX(20%);
 }
 
-.social-container {
+.login-page .social-container {
     margin: 20px 0;
 }
 
-.social-container a {
+.login-page .social-container a {
     border: 1px solid #dddddd;
     border-radius: 50%;
     display: inline-flex;
@@ -309,6 +332,18 @@ input {
     transition: 0.3s ease-in-out;
 }
 
-.social-container a:hover {
+.login-page .social-container a:hover {
     border: 1px solid #4bb6b7;
+}
+
+/* Celular: un solo panel, sin la animación lateral */
+@media (max-width: 700px) {
+    .login-page .container { width: calc(100% - 32px); min-height: 460px; }
+    .login-page .overlay-container { display: none; }
+    .login-page .login-container,
+    .login-page .register-container { width: 100%; }
+    .login-page .container.right-panel-active .login-container,
+    .login-page .container.right-panel-active .register-container { transform: none; }
+    .login-page form { padding: 0 24px; }
+    .login-page button { padding: 12px 48px; }
 }
